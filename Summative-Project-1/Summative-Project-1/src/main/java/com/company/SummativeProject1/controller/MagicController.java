@@ -22,9 +22,19 @@ public class MagicController {
             "Signs point to yes."
     ));
 
+    private static int idCounter = 0;
+    private Random random = new Random();
+
     // URI: /magic
     // Method: POST
     // Request Body: Question
     // Response Body: Answer
     // The POST request for the Magic 8 Ball endpoint should include a user-provided question.
+    @RequestMapping(value = "/magic", method = RequestMethod.POST)
+    @ResponseStatus(value = HttpStatus.CREATED)
+    public Answer magic(@RequestBody String question) {
+        int id = idCounter++;
+        String answer = answerList.get(random.nextInt(answerList.size()));
+        return new Answer(id, question, answer);
+    }
 }
