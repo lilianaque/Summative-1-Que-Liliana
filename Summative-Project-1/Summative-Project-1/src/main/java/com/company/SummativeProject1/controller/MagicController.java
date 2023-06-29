@@ -9,8 +9,17 @@ import java.util.List;
 
 @RestController
 public class MagicController {
-    private static List<Answer> answerList = new ArrayList<>(Arrays.asList(
-
+    private static List<String> answerList = new ArrayList<>(Arrays.asList(
+            "It is certain.",
+            "As I see it, yes.",
+            "Reply hazy, try again.",
+            "Don't count on it.",
+            "My sources say no.",
+            "Outlook not so good.",
+            "Better not tell you now.",
+            "Very doubtful.",
+            "Yes - definitely.",
+            "Signs point to yes."
     ));
 
     // URI: /magic
