@@ -8,9 +8,7 @@ import java.util.List;
 
 @RestController
 public class QuoteController {
-    private List<Quote> quoteList = new ArrayList<>();
-    int idCounter;
-    idCounter ++
+
 
 
 }
