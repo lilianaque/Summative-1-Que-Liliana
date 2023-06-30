@@ -1,4 +1,4 @@
-package com.company.magic8ball.models;
+package com.company.SummativeProject1.model;
 
 public class Answer {
     private int id;

@@ -1,11 +1,10 @@
-package com.company.magic8ball.controllers;
+package com.company.SummativeProject1.controller;
 
-import com.company.magic8ball.models.Answer;
-import org.springframework.web.bind.annotation.RestController;
+import com.company.SummativeProject1.model.Answer;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @RestController
 public class MagicController {
@@ -32,9 +31,11 @@ public class MagicController {
     // The POST request for the Magic 8 Ball endpoint should include a user-provided question.
     @RequestMapping(value = "/magic", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.CREATED)
-    public Answer magic(@RequestBody String question) {
-        int id = idCounter++;
+    public Answer magic(@RequestBody Optional<String> question) {
         String answer = answerList.get(random.nextInt(answerList.size()));
-        return new Answer(id, question, answer);
+        if(question.isPresent()){
+            return new Answer(idCounter++, question.get(), answer);
+        }
+        return new Answer(idCounter++, "No question", answer);
     }
 }
