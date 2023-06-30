@@ -36,7 +36,7 @@ public class MagicControllerTests {
             .content(""))
 
             .andExpect(status().isCreated())
-            .andExpect(jsonPath("$.question").doesNotExist())
+            .andExpect(jsonPath("$.question").value("No question"))
             .andExpect(jsonPath("$.answer").exists());
     }
 
@@ -46,6 +46,7 @@ public class MagicControllerTests {
             .contentType("application/json"))
 
             .andExpect(status().isCreated())
+            .andExpect(jsonPath("$.question").value("No question"))
             .andExpect(jsonPath("$.answer").exists());
     }
 }
