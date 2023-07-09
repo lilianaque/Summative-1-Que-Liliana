@@ -8,6 +8,9 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -19,14 +22,18 @@ public class MagicControllerTests {
 
     @Test
     public void shouldReturnAnswerAndQuestionWhenQuestionProvided() throws Exception {
-        String question = "Test Question";
-        mockMvc.perform(MockMvcRequestBuilders.post("/magic")
-            .contentType("application/json")
-            .content(question))
+        Map<String, String> questionMap = new HashMap<>();
+        questionMap.put("question", "Test Question");
 
-            .andExpect(status().isCreated())
-            .andExpect(jsonPath("$.question").value(question))
-            .andExpect(jsonPath("$.answer").exists());
+        String requestBody = mapper.writeValueAsString(questionMap);
+
+        mockMvc.perform(post("/magic")
+                        .contentType("application/json")
+                        .content(requestBody))
+
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.question").value("Test Question"))
+                .andExpect(jsonPath("$.answer").exists());
     }
 
     @Test
@@ -36,7 +43,7 @@ public class MagicControllerTests {
             .content(""))
 
             .andExpect(status().isCreated())
-            .andExpect(jsonPath("$.question").value("No question"))
+            .andExpect(jsonPath("$.question").doesNotExist())
             .andExpect(jsonPath("$.answer").exists());
     }
 
@@ -46,7 +53,7 @@ public class MagicControllerTests {
             .contentType("application/json"))
 
             .andExpect(status().isCreated())
-            .andExpect(jsonPath("$.question").value("No question"))
+            .andExpect(jsonPath("$.question").doesNotExist())
             .andExpect(jsonPath("$.answer").exists());
     }
 }
