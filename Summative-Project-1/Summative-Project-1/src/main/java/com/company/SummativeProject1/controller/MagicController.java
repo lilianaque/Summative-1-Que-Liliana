@@ -24,18 +24,16 @@ public class MagicController {
     private static int idCounter = 0;
     private Random random = new Random();
 
-    // URI: /magic
-    // Method: POST
-    // Request Body: Question
-    // Response Body: Answer
-    // The POST request for the Magic 8 Ball endpoint should include a user-provided question.
     @RequestMapping(value = "/magic", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.CREATED)
-    public Answer magic(@RequestBody Optional<String> question) {
+    public Answer magic(@RequestBody Optional<Map<String, String>> requestBody) {
         String answer = answerList.get(random.nextInt(answerList.size()));
-        if(question.isPresent()){
-            return new Answer(idCounter++, question.get(), answer);
+        String question = null;
+
+        if(requestBody.isPresent()){
+            question = requestBody.get().get("question");
         }
-        return new Answer(idCounter++, "No question", answer);
+
+        return new Answer(idCounter++, question, answer);
     }
 }
