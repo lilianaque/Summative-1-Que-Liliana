@@ -1,6 +1,7 @@
 package com.company.SummativeProject1.controller;
 
 import com.company.SummativeProject1.model.Answer;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,15 +35,18 @@ public class MagicController {
 
     @RequestMapping(value = "/magic", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.CREATED)
-    public Answer magic(@RequestBody Optional<Map<String, String>> requestBody) {
+    public Answer magic(@RequestBody Optional<JsonNode> requestBodyOpt) throws Exception {
         List<String> keys = new ArrayList<>(answerMap.keySet());
         String answer = keys.get(random.nextInt(keys.size()));
         int id = answerMap.get(answer);
 
         String question = null;
 
-        if(requestBody.isPresent()){
-            question = requestBody.get().get("question");
+        if(requestBodyOpt.isPresent()){
+            JsonNode requestBody = requestBodyOpt.get();
+            if (requestBody.has("question")) {
+                question = requestBody.get("question").asText();
+            }
         }
 
         return new Answer(id, question, answer);

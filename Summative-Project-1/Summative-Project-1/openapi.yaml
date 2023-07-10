@@ -15,7 +15,7 @@ paths:
         content:
           application/json:
             schema:
-              type: string
+              $ref: '#/components/schemas/JsonNode'
       responses:
         '201':
           description: Created
@@ -51,6 +51,8 @@ paths:
                   $ref: '#/components/schemas/Quote'
 components:
   schemas:
+    JsonNode:
+      type: object
     Answer:
       type: object
       properties:
