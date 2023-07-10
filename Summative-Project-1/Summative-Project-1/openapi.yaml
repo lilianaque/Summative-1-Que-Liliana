@@ -15,7 +15,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/JsonNode'
+              $ref: '#/components/schemas/MagicQuestion'
       responses:
         '201':
           description: Created
@@ -86,3 +86,10 @@ components:
           type: string
         quote:
           type: string
+    MagicQuestion:
+      type: object
+      properties:
+        question:
+          type: string
+      required:
+        - question
