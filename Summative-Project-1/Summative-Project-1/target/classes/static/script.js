@@ -12,7 +12,7 @@ function getWord() {
   fetch('http://localhost:8080/word')
     .then(response => response.json())
     .then(data => {
-      const word = data[0];
+      const word = data;
       document.getElementById('wordText').innerHTML = "Id: " + word.id + "<br>Word: " + word.word + "<br>Definition: " + word.definition;
     })
     .catch(error => console.error(error));
